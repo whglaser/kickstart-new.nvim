@@ -243,6 +243,10 @@ end
 local rtp = vim.opt.rtp
 rtp:prepend(lazypath)
 
+-- Ensure vim.lsp.config['*'] exists so plugins like blink.cmp
+-- don't error when LSP is disabled.
+if vim.lsp.config and not vim.lsp.config['*'] then vim.lsp.config('*', {}) end
+
 -- [[ Configure and install plugins ]]
 --
 --  To check the current status of your plugins, run
@@ -476,6 +480,7 @@ require('lazy').setup({
   {
     -- Main LSP Configuration
     'neovim/nvim-lspconfig',
+    enabled = false,
     dependencies = {
       -- Automatically install LSPs and related tools to stdpath for Neovim
       -- Mason must be loaded before its dependents so we need to set it up here.
@@ -487,7 +492,7 @@ require('lazy').setup({
       { 'j-hui/fidget.nvim', opts = {} },
 
       -- Allows extra capabilities provided by blink.cmp
-      'saghen/blink.cmp',
+      -- 'saghen/blink.cmp', -- NOTE: disabled along with LSP; standalone spec below still loads it
     },
     config = function()
       -- Brief aside: **What is LSP?**
@@ -769,7 +774,7 @@ require('lazy').setup({
       },
 
       sources = {
-        default = { 'lsp', 'path', 'snippets' },
+        default = { 'path', 'snippets' },
       },
 
       snippets = { preset = 'luasnip' },
