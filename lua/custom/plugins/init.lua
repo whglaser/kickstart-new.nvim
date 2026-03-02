@@ -68,4 +68,17 @@ return {
 	'sindrets/diffview.nvim',
 opts = {},
   },
+  {
+    'iamcco/markdown-preview.nvim',
+    cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
+    keys = {
+      { '<leader>mp', '<cmd>MarkdownPreviewToggle<CR>', ft = 'markdown', desc = '[M]arkdown [P]review toggle' },
+    },
+    ft = { 'markdown' },
+    build = function(plugin)
+      -- Add the plugin to runtimepath so autoload functions are available
+      vim.opt.rtp:append(plugin.dir)
+      vim.fn['mkdp#util#install']()
+    end,
+  },
 }
