@@ -5,8 +5,7 @@
 return {
 	{
     'jakewvincent/mkdnflow.nvim',
-    event = 'BufRead',
-    filetypes = { 'markdown' },
+    ft = { 'markdown' },
     config = function()
       require('mkdnflow').setup {
         perspective = {
